@@ -2,7 +2,7 @@
 
 A simple wordpress plugin that adds two shortcodes, [test] which outputs 'TEST SUCCEEDED' as a string and [instafeed] which outputs 5 of the most recent pictures from the users instagram account.
 
-The plugin includes an admin page where the user can authorize the plugin to access their data.
+The plugin includes an admin page where the user can authorize the plugin to access their instagram account.
 
 ## Bugs
 
