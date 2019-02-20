@@ -1,7 +1,7 @@
 <?php
   // [instafeed]
-  function instafeed_shortcode() {
-    return 'this should be an instagram feed :0';
+  function instafeed_shortcode( $input ) {
+    return "this shortcode now takes an input {$input[0]}";
   }
 
   add_shortcode('instafeed', 'instafeed_shortcode');

@@ -14,24 +14,27 @@ if(!defined('ABSPATH')) {
 }
 
 // Load scripts
-require_once(plugin_dir_path(__FILE__).'/includes/konceptTest-scripts.php');
+require_once(plugin_dir_path(__FILE__) . '/includes/konceptTest-scripts.php');
 
-// Add settings link
-// add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'add_plugin_page_settings_link');
-// function add_plugin_page_settings_link( $links ) {
-// 	$links[] = '<a href="' .
-// 		admin_url( 'options-general.php?page=my-plugin' ) .
-// 		'">' . __('Settings') . '</a>';
-// 	return $links;
-// }
+// Set variables
+$client_id = '906b05d7cd2f4642bd9f1086b31c0dfd';
+
+// Add settings link and admin page
+add_action('admin_menu', 'add_admin_page');
+function add_admin_page() {
+  add_menu_page('KonceptTest Settings', 'Koncept Test', 'manage_options', 'kt_plugin', 'admin_index', 'dashicons-store', 110);
+}
 
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'add_plugin_page_settings_link');
+function add_plugin_page_settings_link( $links ) {
+  $links[] = '<a href ="' .
+    admin_url( 'options-general.php?page=kt_plugin' ) .
+    '">' . __('Settings') . '</a>';
+  return $links;
+}
 
-function add_plugin_page_settings_link ( $links ) {
- $mylinks = array(
- '<a href="' . admin_url( 'options-general.php?page=myplugin' ) . '">Settings</a>',
- );
-return array_merge( $links, $mylinks );
+function admin_index( $client_id ) {
+  require_once(plugin_dir_path(__FILE__) . '/templates/admin_index.php');
 }
 
 // Add test shortcode
