@@ -30,27 +30,24 @@
   $state = $_GET['state'];
   $code = $_GET['code'];
   $access_token = get_option('kt_instagram_access_token');
-  static $auth = 'nothing doing';
 ?>
 
 <?php // Control flow
-authorize_instagram_account($code);
   // lets check to see if there is an access token already stored.
   if ($access_token) {
     // we have an access token already stored.
-    $auth = $access_token;
+
   } elseif ($code) {
     // Lets authorize this sucka
-    $auth = $code;
+    authorize_instagram_account($code);
   } else {
     // we have no access token or code
-    $auth = "nothing's started yet :/";
+  
   }
 ?>
 
 <div id="kt-plugin-header">
   <h1>Koncept Test Plugin</h1>
-  <h3>Test: <?php echo "$auth" ?></h3>
   <p>Authorize us to post your latest 5 instagram posts to your site.</p>
 </div>
 
