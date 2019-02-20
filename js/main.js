@@ -1,1 +1,1 @@
-console.log('Koncept test plugin loaded');
+console.log('Konstruct test plugin loaded');

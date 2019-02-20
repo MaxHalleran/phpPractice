@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Koncept Test
+Plugin Name: Konstruct Test
 Plugin URI: https://maxhalleran.github.io
 Description: A simple plugin that adds a [test] shortcode that outputs 'TEST SUCCEEDED' and an [instafeed] shortcode that outputs the latest five images of a user.
 Version: 1.0.0
@@ -13,8 +13,8 @@ if(!defined('ABSPATH')) {
   exit;
 }
 
-// Load scripts
-require_once(plugin_dir_path(__FILE__) . '/includes/konceptTest-scripts.php');
+// Load scripts, if need for css or javascript
+// require_once(plugin_dir_path(__FILE__) . '/includes/konstructTest-scripts.php');
 
 // Set variables
 $client_id = '906b05d7cd2f4642bd9f1086b31c0dfd';
@@ -22,7 +22,7 @@ $client_id = '906b05d7cd2f4642bd9f1086b31c0dfd';
 // Add settings link and admin page
 add_action('admin_menu', 'add_admin_page');
 function add_admin_page() {
-  add_menu_page('KonceptTest Settings', 'Koncept Test', 'manage_options', 'kt_plugin', 'admin_index', 'dashicons-store', 110);
+  add_menu_page('KonstructTest Settings', 'Konstruct Test', 'manage_options', 'kt_plugin', 'admin_index', 'dashicons-store', 110);
 }
 
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'add_plugin_page_settings_link');

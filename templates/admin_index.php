@@ -1,9 +1,9 @@
-<?php // Functions
+<?php // Admin index functions
   function authorize_instagram_account($code) {
     $authorization_code = $code;
 
     // Authenticate the authorization.
-		$response = wp_remote_post( 'https://api.instagram.com/oauth/access_token', array(
+		$response = wp_remote_post('https://api.instagram.com/oauth/access_token', array(
 			'timeout' => 30,
 			'body'    => array(
 				'client_id'     => '906b05d7cd2f4642bd9f1086b31c0dfd',
@@ -12,42 +12,36 @@
 				'code'          => $authorization_code,
 				'redirect_uri'  => admin_url('admin.php?page=kt_plugin'),
 			),
-		) );
-		if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+    ));
+    
+		if (200 !== wp_remote_retrieve_response_code($response)) {
+			return;
+    }
+		$data = json_decode( wp_remote_retrieve_body($response));
+		if ( ! isset($data->access_token)) {
 			return;
 		}
-		$data = json_decode( wp_remote_retrieve_body( $response ) );
-		if ( ! isset( $data->access_token ) ) {
-			return;
-		}
-		update_option( 'kt_instagram_access_token', sanitize_text_field( $data->access_token ) );
-		wp_redirect( admin_url( 'admin.php?page=kt_plugin' ) );
+		update_option('kt_instagram_access_token', sanitize_text_field($data->access_token));
+		wp_redirect(admin_url('admin.php?page=kt_plugin'));
 		die();
   }
 ?>
 
 <?php // State
-  $state = $_GET['state'];
   $code = $_GET['code'];
   $access_token = get_option('kt_instagram_access_token');
 ?>
 
 <?php // Control flow
   // lets check to see if there is an access token already stored.
-  if ($access_token) {
-    // we have an access token already stored.
-
-  } elseif ($code) {
-    // Lets authorize this sucka
+  if ($code) {
+    // We have a code, lets authorize it.
     authorize_instagram_account($code);
-  } else {
-    // we have no access token or code
-  
   }
 ?>
 
 <div id="kt-plugin-header">
-  <h1>Koncept Test Plugin</h1>
+  <h1>Konstruct Test Plugin</h1>
   <p>Authorize us to post your latest 5 instagram posts to your site.</p>
 </div>
 
@@ -59,15 +53,7 @@
   </div>
 
   <?php if ($access_token) : ?>
-    <div> <h3>Your instagram account has succcessfully been connected</h3> </div>
-  <?php endif; ?>
-
-  <?php if ($state) : ?>
-      <div> <h1>There was a state, <?php echo $state ?></h1> </div>
-  <?php endif; ?>
-
-  <?php if ($code) : ?>
-      <div> <h1>There was a code, <?php echo $code ?></h1> </div>
+    <div> <h3>Your instagram account has succcessfully been connected.</h3> </div>
   <?php endif; ?>
   
 </div>
